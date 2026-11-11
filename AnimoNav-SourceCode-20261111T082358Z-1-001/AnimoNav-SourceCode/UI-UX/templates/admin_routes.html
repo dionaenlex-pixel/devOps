@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Fix a route · AnimoNav admin{% endblock %}
+{% block body_class %}app{% endblock %}
+{% block head %}{% include "_leaflet.html" %}{% endblock %}
+{% block body %}
+<main class="layout">
+  <section class="panel">
+    {% set active = "routes" %}{% include "_admin_nav.html" %}
+    <header class="brand">
+      <h1>Fix a route</h1>
+      <p class="hint">Pick two places to see the route. If part of the line is wrong, click that part and fix it on the map.</p>
+    </header>
+
+    <label for="from">Starting point</label>
+    <select id="from"></select>
+    <label for="to">Destination</label>
+    <select id="to"></select>
+    <button type="button" id="show" class="primary">Show route</button>
+
+    <div id="ways" class="route-options" hidden></div>
+
+    <section id="route" hidden>
+      <p class="hint" id="route-summary"></p>
+      <p class="hint">Drag any white dot on the line to move it, or click a step to fix that part.
+        The round pins (places and walkway junctions) can be dragged too, and they save straight away.</p>
+      <ol id="steps" class="fix-steps"></ol>
+    </section>
+
+    <section id="editor" class="card fix-editor" hidden>
+      <strong id="edit-title"></strong>
+      <ul class="howto">
+        <li><b>Drag</b> a white dot to move the line.</li>
+        <li><b>Click the map</b> to add a bend where the line should go.</li>
+        <li><b>Double-click</b> a dot to remove it.</li>
+      </ul>
+      <p id="edit-status" class="hint"></p>
+      <div class="row">
+        <button type="button" id="save" class="primary">Save</button>
+        <button type="button" id="undo" class="secondary">Undo</button>
+      </div>
+      <div class="row">
+        <button type="button" id="redraw" class="secondary">Draw this part again</button>
+        <button type="button" id="cancel" class="secondary">Cancel</button>
+      </div>
+    </section>
+
+    <p id="msg" class="notice" hidden></p>
+    <input type="hidden" id="csrf" value="{{ csrf_token() }}">
+  </section>
+  <div id="map" class="map" aria-label="Campus map"></div>
+</main>
+<script>
+  const ROUTE_NODES = {{ nodes|tojson }};
+  const ROUTE_EDGES = {{ edges|tojson }};
+</script>
+<script src="{{ url_for('static', filename='admin_routes.js') }}"></script>
+{% endblock %}

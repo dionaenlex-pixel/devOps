@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Trace paths · AnimoNav admin{% endblock %}
+{% block body_class %}app{% endblock %}
+{% block head %}{% include "_leaflet.html" %}{% endblock %}
+{% block body %}
+<main class="layout">
+  <section class="panel">
+    {% set active = "trace" %}{% include "_admin_nav.html" %}
+    <header class="brand">
+      <h1>Trace paths</h1>
+      <p class="hint"><span id="progress"></span></p>
+    </header>
+
+    {% for message in get_flashed_messages() %}<p class="notice">{{ message }}</p>{% endfor %}
+
+    <label for="edge">Places</label>
+    <select id="edge"></select>
+    <div id="ways" class="route-options" hidden></div>
+    <div class="card current-hint">
+      <strong>Directions for this way</strong>
+      <p id="hint-text" class="hint"></p>
+      <p class="hint"><a id="edit-link" href="{{ url_for('admin') }}">Edit its distance, status or hint →</a></p>
+    </div>
+
+    <ol class="howto">
+      <li>To trace it again, press <b>Retrace</b>: the old line is cleared.</li>
+      <li>Follow the walkway from the <b class="from-dot">green</b> pin to the <b class="to-dot">red</b> pin, clicking the map at every corner or bend.</li>
+      <li>Press <b>Save</b>. The directions are rewritten from your new line, keeping its landmark note.</li>
+      <li>If a pin sits inside a building, drag it onto the entrance or walkway. It saves right away.</li>
+    </ol>
+
+    <p id="status" class="hint">0 points</p>
+    <div class="row">
+      <button type="button" id="clear" class="secondary">Retrace</button>
+      <button type="button" id="undo" class="secondary">Undo</button>
+    </div>
+    <div class="row">
+      <button type="button" id="save" class="primary">Save</button>
+      <button type="button" id="next" class="secondary">Next untraced</button>
+    </div>
+    <p class="hint"><a href="{{ url_for('admin') }}#add">+ Add another way or a shortcut</a></p>
+    <p id="msg" class="notice" hidden></p>
+    <input type="hidden" id="csrf" value="{{ csrf_token() }}">
+  </section>
+  <div id="map" class="map tracing" aria-label="Campus map for tracing"></div>
+</main>
+<script>
+  const TRACE_NODES = {{ nodes|tojson }};
+  const TRACE_EDGES = {{ edges|tojson }};
+  const TRACE_SELECTED = {{ selected|tojson }};
+</script>
+<script src="{{ url_for('static', filename='admin_trace.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,12 @@
+{# The same menu on every admin page. Set `active` before including it. #}
+<nav class="admin-nav" aria-label="Admin pages">
+  <a href="{{ url_for('admin') }}" {% if active == 'pathways' %}class="active" aria-current="page"{% endif %}>Pathways</a>
+  <a href="{{ url_for('admin_trace') }}" {% if active == 'trace' %}class="active" aria-current="page"{% endif %}>Trace paths</a>
+  <a href="{{ url_for('admin_routes') }}" {% if active == 'routes' %}class="active" aria-current="page"{% endif %}>Fix a route</a>
+  <a href="{{ url_for('admin_entrances') }}" {% if active == 'entrances' %}class="active" aria-current="page"{% endif %}>Entrances &amp; pins</a>
+  <a href="{{ url_for('index') }}">View the site</a>
+  <form method="post" action="{{ url_for('admin_logout') }}">
+    <input type="hidden" name="csrf" value="{{ csrf_token() }}">
+    <button type="submit" class="link-button">Log out</button>
+  </form>
+</nav>

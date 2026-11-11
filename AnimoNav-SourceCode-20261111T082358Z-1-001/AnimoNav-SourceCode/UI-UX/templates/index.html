@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}AnimoNav · DLSL Campus Directions{% endblock %}
+{% block body_class %}app{% endblock %}
+{% block head %}
+{% include "_leaflet.html" %}
+{% endblock %}
+{% block body %}
+<main class="layout">
+  <section class="panel">
+    <header class="brand">
+      <h1>AnimoNav</h1>
+      <p>Walking directions around De La Salle Lipa</p>
+    </header>
+
+    <form id="route-form" class="route-form">
+      <label for="from">Starting point</label>
+      <div class="row">
+        <select id="from" required></select>
+        <button type="button" id="locate" class="secondary">Use my location</button>
+      </div>
+      <p id="locate-msg" class="hint" hidden></p>
+
+      <label for="search">Destination</label>
+      <input id="search" type="search" list="places" placeholder="Search a building, gate, or office"
+             autocomplete="off">
+      <datalist id="places"></datalist>
+      <select id="to" required></select>
+
+      <div class="row">
+        <button type="submit" class="primary">Get directions</button>
+        <button type="button" id="swap" class="secondary" title="Swap start and destination">Swap</button>
+      </div>
+    </form>
+
+    <p id="error" class="error" hidden></p>
+
+    <section id="result" hidden>
+      <div id="route-options" class="route-options" hidden></div>
+      <div class="summary">
+        <strong id="total"></strong>
+        <span id="time"></span>
+      </div>
+      <ol id="steps" class="steps"></ol>
+    </section>
+
+    <section id="info" class="info" hidden>
+      <span id="info-category" class="tag"></span>
+      <h2 id="info-name"></h2>
+      <p id="info-desc"></p>
+    </section>
+
+    <footer class="foot">
+      <a href="{{ url_for('admin') }}">Admin</a>
+    </footer>
+  </section>
+
+  <div id="map" class="map" aria-label="Campus map"></div>
+</main>
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+{% endblock %}

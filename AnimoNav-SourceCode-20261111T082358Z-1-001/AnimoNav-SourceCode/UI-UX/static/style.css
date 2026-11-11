@@ -1,0 +1,212 @@
+:root {
+  --green: #0b6b3a;
+  --green-dark: #08502b;
+  --green-soft: #e3f1e8;
+  --ink: #17211c;
+  --muted: #5b6b62;
+  --line: #dbe3de;
+  --bg: #f5f7f5;
+  --white: #ffffff;
+  --red: #c62828;
+  --red-soft: #fde8e8;
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  color: var(--ink);
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); }
+h1, h2 { margin: 0; line-height: 1.2; }
+a { color: var(--green); }
+.hint { color: var(--muted); font-size: 0.9rem; margin: 0; }
+.error { background: var(--red-soft); color: var(--red); padding: 10px 12px; border-radius: 8px; margin: 0; }
+.notice { background: var(--green-soft); color: var(--green-dark); padding: 10px 12px; border-radius: 8px; }
+
+input, select, textarea, button { font: inherit; }
+input, select, textarea {
+  width: 100%; padding: 10px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--white);
+}
+textarea { resize: vertical; }
+button { padding: 10px 16px; border-radius: 8px; border: 1px solid transparent; cursor: pointer; white-space: nowrap; }
+button.primary { background: var(--green); color: var(--white); }
+button.primary:hover { background: var(--green-dark); }
+button.secondary { background: var(--white); color: var(--green); border-color: var(--line); }
+button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: 3px solid #7cc39c; outline-offset: 1px;
+}
+
+/* ---------- Main app: map with a side panel ---------- */
+html, body.app { height: 100%; }
+.layout { display: grid; height: 100%; grid-template-columns: 380px 1fr; }
+.panel { overflow-y: auto; padding: 20px; background: var(--white); border-right: 1px solid var(--line);
+         display: flex; flex-direction: column; gap: 16px; }
+.map { height: 100%; min-height: 300px; }
+.brand h1 { color: var(--green); font-size: 1.7rem; }
+.brand p { margin: 4px 0 0; color: var(--muted); }
+.route-form { display: flex; flex-direction: column; gap: 8px; }
+.route-form label { font-weight: 600; font-size: 0.9rem; margin-top: 4px; }
+.row { display: flex; flex-wrap: wrap; gap: 8px; }
+.row > select { flex: 1 1 200px; min-width: 0; }
+
+.route-options { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
+.route-option { text-align: left; white-space: normal; background: var(--white); color: var(--ink);
+                border-color: var(--line); display: flex; flex-direction: column; gap: 2px; }
+.route-option small { color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.route-option.chosen { border-color: var(--green); background: var(--green-soft); }
+.route-option.chosen strong { color: var(--green-dark); }
+.summary { display: flex; align-items: baseline; gap: 10px; padding-bottom: 8px; border-bottom: 1px solid var(--line); }
+.summary strong { font-size: 1.5rem; color: var(--green); }
+.summary span { color: var(--muted); }
+.steps { margin: 12px 0 0; padding-left: 22px; display: flex; flex-direction: column; gap: 10px; }
+.steps li { padding-left: 4px; }
+.steps li span { display: block; }
+.steps li small { color: var(--muted); }
+.steps li.arrive { font-weight: 600; }
+
+.info { background: var(--bg); border-radius: 10px; padding: 14px; }
+.info h2 { font-size: 1.15rem; margin: 6px 0; }
+.info p { margin: 0; color: var(--muted); }
+.tag { display: inline-block; font-size: 0.75rem; font-weight: 600; text-transform: uppercase;
+       letter-spacing: 0.04em; color: var(--green); background: var(--green-soft); padding: 2px 8px; border-radius: 999px; }
+.foot { margin-top: auto; font-size: 0.85rem; }
+.map { background: var(--white); }
+.map.tracing { cursor: crosshair; }
+.howto { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 6px; color: var(--muted); }
+.from-dot { color: var(--green); }
+.to-dot { color: var(--red); }
+.trace-pin { border-radius: 50%; border: 3px solid var(--white); box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4); cursor: move; }
+.trace-pin.pin-start { background: var(--green); }
+.trace-pin.pin-end { background: var(--red); }
+.trace-pin.pin-gate { background: #e08a00; }
+.gate-dot { color: #e08a00; }
+.trace-pin.pin-any { background: #1e6fd0; }
+.all-dot { color: #1e6fd0; }
+.check-row { display: flex; align-items: center; gap: 8px; font-weight: 400 !important; }
+.check-row input { width: auto; }
+
+.map.leaflet-container { background: var(--white); }   /* no grey band around the campus image */
+
+@media (max-width: 760px) {
+  /* minmax(0, 1fr): long place names in the dropdowns can't make the page wider than the phone */
+  .layout { grid-template-columns: minmax(0, 1fr); grid-template-rows: 40vh auto; height: auto; }
+  /* On a phone the map stays at the top while you scroll through the directions */
+  .map { order: -1; height: 40vh; position: sticky; top: 0; z-index: 1000;
+         border-bottom: 1px solid var(--line); }
+  .panel { border-right: 0; overflow: visible; }
+}
+
+/* ---------- Admin pages ---------- */
+.admin-nav { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; margin-bottom: 16px;
+             padding-bottom: 10px; border-bottom: 1px solid var(--line); }
+.admin-nav a, .admin-nav .link-button { padding: 6px 10px; border-radius: 8px; color: var(--green);
+             text-decoration: none; font-weight: 600; font-size: 0.9rem; }
+.admin-nav a:hover, .admin-nav .link-button:hover { background: var(--green-soft); }
+.admin-nav a.active { background: var(--green); color: var(--white); }
+.admin-nav form { margin-left: auto; }
+.admin-nav .link-button { background: none; border: 0; cursor: pointer; }
+a.button { display: inline-block; padding: 10px 16px; border-radius: 8px; text-decoration: none; }
+a.button.primary { background: var(--green); color: var(--white); }
+.filter { display: flex; flex-direction: column; gap: 4px; font-weight: 600; font-size: 0.9rem;
+          max-width: 420px; margin-bottom: 12px; }
+.current-hint { display: flex; flex-direction: column; gap: 4px; padding: 12px; }
+.current-hint p { margin: 0; }
+/* The route on the main map: dashes that flow in the walking direction, and labels at the two ends */
+@keyframes route-flow { to { stroke-dashoffset: -30; } }
+.route-flow { animation: route-flow 1s linear infinite; }
+@media (prefers-reduced-motion: reduce) { .route-flow { animation: none; } }
+.leaflet-tooltip.route-label { font-weight: 700; font-size: 0.8rem; padding: 3px 8px; border: 0;
+                               border-radius: 6px; color: #fff; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35); }
+.leaflet-tooltip.route-label-start { background: var(--green); }
+.leaflet-tooltip.route-label-end { background: var(--red); }
+.leaflet-tooltip-top.route-label-start::before { border-top-color: var(--green); }
+.leaflet-tooltip-top.route-label-end::before { border-top-color: var(--red); }
+
+/* Fix a route */
+.fix-steps { margin: 0; padding-left: 22px; display: flex; flex-direction: column; gap: 6px; font-size: 0.9rem; }
+.fix-steps li { padding: 6px 8px; border-radius: 8px; cursor: pointer; }
+.fix-steps li:hover, .fix-steps li:focus-visible { background: var(--green-soft); }
+.fix-steps li.editing { background: #fff1d6; outline: 2px solid #e07000; }
+.fix-editor { display: flex; flex-direction: column; gap: 8px; padding: 12px; border-color: #e07000; }
+.step-number { background: var(--green-dark); color: var(--white); border: 2px solid var(--white); border-radius: 50%;
+               font: 700 12px/18px sans-serif; text-align: center; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4); }
+.edit-dot { background: var(--white); border: 3px solid #e07000; border-radius: 50%; cursor: move;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4); }
+.route-dot { background: var(--white); border: 2px solid var(--green-dark); border-radius: 50%; cursor: move; }
+.route-pin { background: #1a73e8; border: 3px solid var(--white); border-radius: 50%; cursor: move;
+             box-shadow: 0 1px 4px rgba(0, 0, 0, 0.45); }
+.page { max-width: 1200px; margin: 0 auto; padding: 24px 16px 48px; }
+.page.narrow { max-width: 420px; }
+.page h1 { margin-bottom: 12px; }
+.page h2 { margin: 28px 0 12px; }
+.card { background: var(--white); border: 1px solid var(--line); border-radius: 10px; padding: 16px; }
+.stack { display: flex; flex-direction: column; gap: 8px; }
+.admin-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap; }
+.table-wrap { overflow-x: auto; background: var(--white); border: 1px solid var(--line); border-radius: 10px; }
+.admin-table { border-collapse: collapse; width: 100%; min-width: 900px; font-size: 0.9rem; }
+.admin-table th, .admin-table td { padding: 8px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+.admin-table th { background: var(--bg); font-size: 0.8rem; text-transform: uppercase; color: var(--muted); }
+.admin-table input[type="number"] { width: 110px; }
+.admin-table select[name="status"] { min-width: 150px; }
+.admin-table input[type="checkbox"] { width: auto; }
+.admin-table td.hints { min-width: 320px; }
+.admin-table td.hints textarea + textarea { margin-top: 6px; }
+.admin-table tr:not(.status-available) { background: var(--red-soft); }
+.admin-table tr.group-head th { background: var(--green-soft); color: var(--green-dark); text-transform: none;
+                                font-size: 0.85rem; border-top: 2px solid var(--green); }
+.admin-table tr.in-group td:first-child { border-left: 4px solid var(--green-soft); }
+.manage { display: flex; flex-direction: column; gap: 8px; }
+.inline-form { display: flex; gap: 6px; align-items: center; }
+.inline-form input { flex: 1; min-width: 0; padding: 6px 8px; }
+.inline-form button { padding: 6px 10px; font-size: 0.8rem; }
+.entrance-list { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 6px; }
+.entrance-list li { display: flex; gap: 6px; }
+.entrance-list li form:first-child { flex: 1; }
+.admin-table td.bag { font-size: 0.8rem; min-width: 150px; }
+.admin-table .entrance-pick { margin-top: 6px; padding: 6px 8px; font-size: 0.85rem; }
+.add-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; align-items: end; }
+.add-form label { display: flex; flex-direction: column; gap: 4px; font-weight: 600; font-size: 0.9rem; }
+.add-form label.check { flex-direction: row; align-items: center; }
+.add-form label.check input { width: auto; }
+.add-form .wide { grid-column: 1 / -1; }
+button.danger { background: var(--white); color: var(--red); border-color: var(--red); }
+.delete-form { margin-top: 8px; display: flex; flex-direction: column; gap: 4px; }
+.delete-form .confirm { font-size: 0.8rem; display: flex; gap: 4px; align-items: center; }
+.delete-form .confirm input { width: auto; }
+
+/* Pathways page: one line per pathway, click to open its editor */
+.add-box { margin: 16px 0; padding: 12px 16px; }
+.add-box summary { cursor: pointer; display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
+.add-box[open] summary { margin-bottom: 12px; }
+.filters { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: flex-end; margin: 8px 0 12px; }
+.filters .filter { margin: 0; flex: 1 1 260px; }
+.filters #count { flex-basis: 100%; }
+.pathway-list { display: flex; flex-direction: column; gap: 6px; }
+.group-head { margin: 14px 0 2px; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); }
+.pathway { background: var(--white); border: 1px solid var(--line); border-radius: 10px; }
+.pathway[open] { border-color: var(--green); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06); }
+.pathway summary { display: grid; grid-template-columns: 3em minmax(0, 1fr) 5em auto; gap: 10px; align-items: center;
+                   padding: 10px 14px; cursor: pointer; list-style: none; }
+.pathway summary::-webkit-details-marker { display: none; }
+.pathway summary:hover { background: var(--bg); border-radius: 10px; }
+.pathway .num { color: var(--muted); font-variant-numeric: tabular-nums; }
+.pathway .route { font-weight: 600; min-width: 0; overflow-wrap: anywhere; }
+.pathway .dist { text-align: right; font-variant-numeric: tabular-nums; color: var(--muted); }
+.pathway .badges { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+.pill { display: inline-block; font-size: 0.75rem; font-weight: 600; padding: 2px 8px; border-radius: 999px;
+        background: var(--bg); color: var(--muted); white-space: nowrap; }
+.pill-available { background: var(--green-soft); color: var(--green-dark); }
+.pill-blocked, .pill-closed, .pill-under_construction { background: var(--red-soft); color: var(--red); }
+.pill-bag { background: #fff1d6; color: #8a5300; }
+.pill-added { background: #e4edfb; color: #1f5fbf; }
+.edit-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; align-items: end;
+             padding: 4px 14px 14px; }
+.edit-form label { display: flex; flex-direction: column; gap: 4px; font-weight: 600; font-size: 0.9rem; }
+.edit-form label.check { flex-direction: row; align-items: center; gap: 8px; }
+.edit-form label.check input { width: auto; }
+.edit-form .wide { grid-column: 1 / -1; }
+.edit-form .actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.bag-list { font-size: 0.9rem; display: flex; flex-direction: column; gap: 2px; }
+.pathway .delete-form { padding: 0 14px 14px; flex-direction: row; flex-wrap: wrap; align-items: center; gap: 10px; }
+a.button.secondary { background: var(--white); color: var(--green); border: 1px solid var(--line); }
+@media (max-width: 600px) {
+  .pathway summary { grid-template-columns: 2.5em minmax(0, 1fr) auto; }
+  .pathway .badges { grid-column: 2 / -1; justify-content: flex-start; }
+}

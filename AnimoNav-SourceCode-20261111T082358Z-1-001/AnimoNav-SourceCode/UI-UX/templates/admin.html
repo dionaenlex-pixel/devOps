@@ -1,0 +1,185 @@
+{% extends "base.html" %}
+{% block title %}Pathways · AnimoNav admin{% endblock %}
+{% block body %}
+<main class="page">
+  {% set active = "pathways" %}{% include "_admin_nav.html" %}
+  <header class="admin-head">
+    <div>
+      <h1>Pathways</h1>
+      <p class="hint">Logged in as {{ session.username }}. Click a pathway to edit it. Pathways that aren't
+        <b>available</b> are skipped when routes are worked out.</p>
+    </div>
+  </header>
+
+  {% for message in get_flashed_messages() %}<p class="notice">{{ message }}</p>{% endfor %}
+
+  <details class="card add-box" id="add">
+    <summary><strong>+ Add a pathway</strong> <span class="hint">another way between two places, or a shortcut the map doesn't show</span></summary>
+    <form method="post" action="{{ url_for('admin_add_edge') }}" class="edit-form">
+      <input type="hidden" name="csrf" value="{{ csrf_token() }}">
+      <label>From
+        <select name="from_node" required>
+          {% for n in nodes %}<option value="{{ n.id }}">{{ n.name }}</option>{% endfor %}
+        </select>
+      </label>
+      <label>To
+        <select name="to_node" required>
+          {% for n in nodes %}<option value="{{ n.id }}">{{ n.name }}</option>{% endfor %}
+        </select>
+      </label>
+      <label>Distance (m)
+        <input name="distance_m" type="number" step="0.01" min="0.01" required>
+      </label>
+      <label>Status
+        <select name="status">
+          {% for s in statuses %}<option value="{{ s }}">{{ s.replace('_', ' ') }}</option>{% endfor %}
+        </select>
+      </label>
+      <label class="check"><input name="one_way" type="checkbox"> One-way</label>
+      <label class="wide">Directions
+        <textarea name="direction_hint" rows="2" required placeholder="e.g. Walk west along the covered walkway to Mabini Hall."></textarea>
+      </label>
+      <label class="wide">Directions the other way (optional)
+        <textarea name="reverse_hint" rows="2"></textarea>
+      </label>
+      <div class="wide actions"><button type="submit" class="primary">Add and trace it</button></div>
+    </form>
+  </details>
+
+  <div class="filters">
+    <label class="filter">Find a pathway
+      <input id="filter" type="search" placeholder="A place or a number, e.g. Zara or 49" autocomplete="off">
+    </label>
+    <label class="filter">Show
+      <select id="status-filter">
+        <option value="">All pathways</option>
+        <option value="not-available">Not available (blocked, closed, ...)</option>
+        <option value="added">Added on this page</option>
+        <option value="one-way">One-way</option>
+        <option value="bag">With a bag check</option>
+      </select>
+    </label>
+    <p class="hint" id="count"></p>
+  </div>
+
+  <div class="pathway-list">
+  {% for heading, group in groups %}
+    {% if heading %}<h3 class="group-head">{{ heading }}</h3>{% endif %}
+    {% for e in group %}
+    {% set has_bag = bag[e.id][0] or bag[e.id][1] %}
+    <details class="pathway status-{{ e.status }}" id="edge-{{ e.id }}"
+             data-status="{{ e.status }}" data-added="{{ 0 if e.id in base_ids else 1 }}"
+             data-oneway="{{ e.one_way }}" data-bag="{{ 1 if has_bag else 0 }}">
+      <summary>
+        <span class="num">{{ e.id }}</span>
+        <span class="route">{{ e.from_name }} → {{ e.to_name }}</span>
+        <span class="dist">{{ '%.0f' % e.distance_m }} m</span>
+        <span class="badges">
+          {% if e.status != "available" %}<span class="pill pill-{{ e.status }}">{{ e.status.replace('_', ' ') }}</span>{% endif %}
+          {% if e.one_way %}<span class="pill">one-way</span>{% endif %}
+          {% if has_bag %}<span class="pill pill-bag">bag check</span>{% endif %}
+          {% if e.id not in base_ids %}<span class="pill pill-added">added</span>{% endif %}
+        </span>
+      </summary>
+
+      <form method="post" action="{{ url_for('admin_update_edge', edge_id=e.id) }}" class="edit-form">
+        <input type="hidden" name="csrf" value="{{ csrf_token() }}">
+        <label>Distance (m)
+          <input name="distance_m" type="number" step="0.01" min="0.01" value="{{ '%.2f' % e.distance_m }}" required>
+        </label>
+        <label>Status
+          <select name="status">
+            {% for s in statuses %}
+            <option value="{{ s }}" {% if s == e.status %}selected{% endif %}>{{ s.replace('_', ' ') }}</option>
+            {% endfor %}
+          </select>
+        </label>
+        <label class="check"><input name="one_way" type="checkbox" {% if e.one_way %}checked{% endif %}> One-way</label>
+        {# Ends at a building with several entrances can be moved to another entrance #}
+        {% for field, building, current, label in [("from_node", e.from_building, e.from_node, "Starts at"),
+                                                   ("to_node", e.to_building, e.to_node, "Ends at")] %}
+          {% if building in entrances %}
+          <label>{{ label }}
+            <select name="{{ field }}">
+              {% for en in entrances[building] %}
+              <option value="{{ en.id }}" {% if en.id == current %}selected{% endif %}>{{ en.name }}</option>
+              {% endfor %}
+            </select>
+          </label>
+          {% endif %}
+        {% endfor %}
+        <label class="wide">Directions ({{ e.from_name }} → {{ e.to_name }})
+          <textarea name="direction_hint" rows="2" required>{{ e.direction_hint }}</textarea>
+        </label>
+        <label class="wide">Directions the other way (optional)
+          <textarea name="reverse_hint" rows="2"
+                    placeholder="Left empty, they're written from the traced line">{{ e.reverse_hint or '' }}</textarea>
+        </label>
+        {% if has_bag %}
+        <div class="wide bag-list">
+          <strong>Bag checks on this pathway</strong> <span class="hint">(worked out from its line on the map)</span>
+          {% for check in bag[e.id][0] %}<div>{{ e.from_name }} → {{ e.to_name }}: {{ check_label(check) }}</div>{% endfor %}
+          {% for check in bag[e.id][1] %}<div>{{ e.to_name }} → {{ e.from_name }}: {{ check_label(check) }}</div>{% endfor %}
+        </div>
+        {% endif %}
+        <div class="wide actions">
+          <button type="submit" class="primary">Save</button>
+          <a class="button secondary" href="{{ url_for('admin_trace', edge=e.id) }}">Trace on the map</a>
+        </div>
+      </form>
+      {% if e.id not in base_ids %}
+      <form method="post" action="{{ url_for('admin_delete_edge', edge_id=e.id) }}" class="delete-form">
+        <input type="hidden" name="csrf" value="{{ csrf_token() }}">
+        <label class="confirm"><input type="checkbox" name="confirm" required> I want to delete this added pathway</label>
+        <button type="submit" class="danger">Delete</button>
+      </form>
+      {% endif %}
+    </details>
+    {% endfor %}
+  {% endfor %}
+  </div>
+</main>
+<script>
+  // Show only the pathways (and their group headings) that match the search and the "Show" filter
+  const search = document.getElementById("filter");
+  const show = document.getElementById("status-filter");
+  const rows = [...document.querySelectorAll(".pathway")];
+
+  function wanted(row) {
+    const q = search.value.trim().toLowerCase();
+    const text = row.querySelector("summary").textContent.toLowerCase();
+    const found = !q || row.id === `edge-${q}` || text.includes(q);
+    const d = row.dataset;
+    const kind = show.value === "" || (show.value === "not-available" && d.status !== "available")
+      || (show.value === "added" && d.added === "1") || (show.value === "one-way" && d.oneway === "1")
+      || (show.value === "bag" && d.bag === "1");
+    return found && kind;
+  }
+
+  function applyFilters() {
+    let count = 0;
+    for (const row of rows) {
+      row.hidden = !wanted(row);
+      if (!row.hidden) count++;
+    }
+    // A group heading shows only when one of its pathways does
+    for (const head of document.querySelectorAll(".group-head")) {
+      let next = head.nextElementSibling, any = false;
+      while (next && next.classList.contains("pathway")) {
+        any = any || !next.hidden;
+        next = next.nextElementSibling;
+      }
+      head.hidden = !any;
+    }
+    document.getElementById("count").textContent = `${count} of ${rows.length} pathways`;
+  }
+
+  search.addEventListener("input", applyFilters);
+  show.addEventListener("change", applyFilters);
+  applyFilters();
+
+  // Coming back after saving (…/admin#edge-12): open that pathway again
+  const target = location.hash && document.querySelector(location.hash);
+  if (target && target.tagName === "DETAILS") { target.open = true; target.scrollIntoView({ block: "center" }); }
+</script>
+{% endblock %}

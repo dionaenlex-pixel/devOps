@@ -1,0 +1,394 @@
+{
+ "entrances": [
+  {
+   "id": 35,
+   "name": "Mabini Hall \u2013 Side Entrance",
+   "building": "Mabini Hall",
+   "entrance": "Side Entrance",
+   "category": "Building",
+   "latitude": 13.942020854904024,
+   "longitude": 121.14602919218942,
+   "map_x": 687.0,
+   "map_y": 756.0,
+   "description": "Side Entrance of Mabini Hall."
+  },
+  {
+   "id": 37,
+   "name": "Chez Rafael \u2013 Back Entrance",
+   "building": "Chez Rafael",
+   "entrance": "Back Entrance",
+   "category": "Canteen",
+   "latitude": 13.942327610367833,
+   "longitude": 121.14662897066104,
+   "map_x": 998.0,
+   "map_y": 750.0,
+   "description": "Back Entrance of Chez Rafael."
+  },
+  {
+   "id": 38,
+   "name": "SENTRUM \u2013 Side Entrance 1",
+   "building": "SENTRUM",
+   "entrance": "Side Entrance 1",
+   "category": "Gymnasium",
+   "latitude": 13.942456468128354,
+   "longitude": 121.14692200199816,
+   "map_x": 1143.0,
+   "map_y": 572.0,
+   "description": "Side Entrance 1 of SENTRUM."
+  },
+  {
+   "id": 39,
+   "name": "SENTRUM \u2013 Side Entrance 2",
+   "building": "SENTRUM",
+   "entrance": "Side Entrance 2",
+   "category": "Gymnasium",
+   "latitude": 13.942456468128354,
+   "longitude": 121.14692200199816,
+   "map_x": 1015.0,
+   "map_y": 573.0,
+   "description": "Side Entrance 2 of SENTRUM."
+  },
+  {
+   "id": 40,
+   "name": "SENTRUM \u2013 Back Entrance 1",
+   "building": "SENTRUM",
+   "entrance": "Back Entrance 1",
+   "category": "Gymnasium",
+   "latitude": 13.942456468128354,
+   "longitude": 121.14692200199816,
+   "map_x": 1114.0,
+   "map_y": 506.0,
+   "description": "Back Entrance 1 of SENTRUM."
+  },
+  {
+   "id": 41,
+   "name": "SENTRUM \u2013 Back Entrance 2",
+   "building": "SENTRUM",
+   "entrance": "Back Entrance 2",
+   "category": "Gymnasium",
+   "latitude": 13.942456468128354,
+   "longitude": 121.14692200199816,
+   "map_x": 1044.0,
+   "map_y": 506.0,
+   "description": "Back Entrance 2 of SENTRUM."
+  },
+  {
+   "id": 42,
+   "name": "CBEAM Hall \u2013 CBEAM Entrance 2",
+   "building": "CBEAM Hall",
+   "entrance": "CBEAM Entrance 2",
+   "category": "Building",
+   "latitude": 13.942349713314687,
+   "longitude": 121.14501115347248,
+   "map_x": 551.0,
+   "map_y": 763.0,
+   "description": "CBEAM Entrance 2 of CBEAM Hall."
+  },
+  {
+   "id": 47,
+   "name": "Feldgrau Pay Parking \u2013 Entrance",
+   "building": "Feldgrau Pay Parking",
+   "entrance": "Entrance",
+   "category": "Parking",
+   "latitude": 13.941839617384002,
+   "longitude": 121.14895587639086,
+   "map_x": 1751.0,
+   "map_y": 903.0,
+   "description": "Entrance of Feldgrau Pay Parking."
+  },
+  {
+   "id": 48,
+   "name": "Feldgrau Pay Parking \u2013 School Entrance",
+   "building": "Feldgrau Pay Parking",
+   "entrance": "School Entrance",
+   "category": "Parking",
+   "latitude": 13.941839617384002,
+   "longitude": 121.14895587639086,
+   "map_x": 1603.0,
+   "map_y": 737.0,
+   "description": "School Entrance of Feldgrau Pay Parking."
+  },
+  {
+   "id": 49,
+   "name": "Sectors 1 & 2 Junction",
+   "building": "Sectors 1 & 2 Junction",
+   "entrance": null,
+   "category": "Junction",
+   "latitude": 13.942349713314687,
+   "longitude": 121.14501115347248,
+   "map_x": 526.0,
+   "map_y": 592.0,
+   "description": "Walkway junction by Sectors 1 & 2: the roads from CBEAM Hall, G. Zara, the Novitiate Gate, the Sports Complex and the Retreat Complex meet here."
+  },
+  {
+   "id": 50,
+   "name": "Side Gate Junction",
+   "building": "Side Gate Junction",
+   "entrance": null,
+   "category": "Junction",
+   "latitude": 13.941839617384002,
+   "longitude": 121.14895587639086,
+   "map_x": 1541.0,
+   "map_y": 675.0,
+   "description": "Walkway junction between St. Mutien Marie Hall and BB Hall, by the Side Gate bag check: the walks to the Side Gate, Feldgrau Pay Parking, Senten and St. Mutien Marie meet here."
+  },
+  {
+   "id": 51,
+   "name": "G. Zara Road Junction",
+   "building": "G. Zara Road Junction",
+   "entrance": null,
+   "category": "Junction",
+   "latitude": 13.942819089834156,
+   "longitude": 121.14582149107501,
+   "map_x": 726.0,
+   "map_y": 661.0,
+   "description": "Junction on the road from the Novitiate Gate, beside Gregorio Zara Hall."
+  },
+  {
+   "id": 52,
+   "name": "SENTRUM Southwest Junction",
+   "building": "SENTRUM Southwest Junction",
+   "entrance": null,
+   "category": "Junction",
+   "latitude": 13.942327610367833,
+   "longitude": 121.14662897066104,
+   "map_x": 1033.0,
+   "map_y": 656.0,
+   "description": "Corner south-west of SENTRUM where the walk from Chez Rafael and Diokno meets SENTRUM's west sidewalk to Gen. M. Malvar."
+  },
+  {
+   "id": 53,
+   "name": "Noli Walkway Junction",
+   "building": "Noli Walkway Junction",
+   "entrance": null,
+   "category": "Junction",
+   "latitude": 13.942289385859198,
+   "longitude": 121.14566382014789,
+   "map_x": 705.0,
+   "map_y": 603.0,
+   "description": "Corner by Noli Me Tangere Hall where the walkways from the south lounge, Mabini Hall and the G. Zara road meet."
+  },
+  {
+   "id": 54,
+   "name": "Senten Walkway Junction",
+   "building": "Senten Walkway Junction",
+   "entrance": null,
+   "category": "Junction",
+   "latitude": 13.942303033334866,
+   "longitude": 121.14811681571796,
+   "map_x": 1444.0,
+   "map_y": 674.0,
+   "description": "Covered walkway south of Senten, between BB Hall and Claro M. Recto Hall."
+  },
+  {
+   "id": 55,
+   "name": "Recto East Walkway Junction",
+   "building": "Recto East Walkway Junction",
+   "entrance": null,
+   "category": "Junction",
+   "latitude": 13.94206110199869,
+   "longitude": 121.14758981355624,
+   "map_x": 1346.0,
+   "map_y": 808.0,
+   "description": "Walkway along the east side of Claro M. Recto Hall, by St. Br. Miguel Hall."
+  },
+  {
+   "id": 56,
+   "name": "Hacienda West Junction",
+   "building": "Hacienda West Junction",
+   "entrance": null,
+   "category": "Junction",
+   "latitude": 13.94206110199869,
+   "longitude": 121.14758981355624,
+   "map_x": 1333.0,
+   "map_y": 744.0,
+   "description": "Walkway along the east side of Claro M. Recto Hall, by the Hacienda."
+  },
+  {
+   "id": 57,
+   "name": "Miguel East Junction",
+   "building": "Miguel East Junction",
+   "entrance": null,
+   "category": "Junction",
+   "latitude": 13.9419376770397,
+   "longitude": 121.14788535196273,
+   "map_x": 1469.0,
+   "map_y": 813.0,
+   "description": "Walkway between St. Br. Miguel Hall and Br. Vernon Mabile Hall, by Feldgrau's wall."
+  },
+  {
+   "id": 58,
+   "name": "SENTRUM West Junction",
+   "building": "SENTRUM West Junction",
+   "entrance": null,
+   "category": "Junction",
+   "latitude": 13.942327610367833,
+   "longitude": 121.14662897066104,
+   "map_x": 1009.0,
+   "map_y": 620.0,
+   "description": "Where the walk from Diokno Hall meets SENTRUM's west sidewalk to Gen. M. Malvar."
+  },
+  {
+   "id": 59,
+   "name": "St. Mutien Marie Hall \u2013 North Entrance",
+   "building": "St. Mutien Marie Hall",
+   "entrance": "North Entrance",
+   "category": "Building",
+   "latitude": 13.942303033334866,
+   "longitude": 121.14811681571796,
+   "map_x": 1440.0,
+   "map_y": 677.0,
+   "description": "North Entrance of St. Mutien Marie Hall."
+  }
+ ],
+ "pathway_ends": {
+  "3": [
+   34,
+   8
+  ],
+  "21": [
+   2,
+   37
+  ],
+  "28": [
+   29,
+   48
+  ],
+  "29": [
+   48,
+   4
+  ],
+  "32": [
+   54,
+   25
+  ],
+  "33": [
+   54,
+   7
+  ],
+  "47": [
+   19,
+   42
+  ]
+ },
+ "pathway_changes": {
+  "1": {
+   "distance_m": 33.13
+  },
+  "6": {
+   "direction_hint": "Head west for about 25 m. Bear left and walk southwest for about 25 m. Bear right and walk west for about 45 m, passing Mabini Hall on your left. Turn right and walk north for about 25 m, passing El Filibusterismo Hall on your left. Bear left and walk northwest for about 25 m. Bear right and walk north for about 15 m, passing Noli Me Tangere Hall on your left. Turn right and walk northeast for about 30 m, until you reach Gregorio Zara Hall."
+  },
+  "9": {
+   "direction_hint": "Head south for about 100 m, until you reach Mabini Hall at its back entrances.",
+   "reverse_hint": "Head north for about 100 m, until you reach CBEAM Hall."
+  },
+  "10": {
+   "direction_hint": "Head north for about 15 m. Bear left and walk northwest for about 30 m, until you reach Noli Me Tangere Hall. This way uses the connecting corridor between the two halls.",
+   "reverse_hint": "Head southeast for about 30 m. Bear right and walk south for about 15 m, until you reach El Filibusterismo Hall. This way uses the connecting corridor between the two halls."
+  },
+  "11": {
+   "direction_hint": "Head east for about 15 m. Bear right and walk southeast for about 50 m, passing El Filibusterismo Hall on your left, until you reach Mabini Hall at its ramp entrance. This way uses the ramp between Noli and Fili Hall.",
+   "reverse_hint": "Head northwest for about 50 m, passing El Filibusterismo Hall on your right. Bear left and walk west for about 15 m, until you reach the Student Center. This way uses the ramp between Noli and Fili Hall."
+  },
+  "13": {
+   "distance_m": 116.45,
+   "direction_hint": "Head southeast for about 55 m. Bear left and walk east for about 20 m. Bear left and walk northeast for about 40 m, passing the Hacienda on your right, until you reach St. Mutien Marie Hall at its south entrance.",
+   "reverse_hint": "Head southwest for about 40 m, passing the Hacienda on your left. Bear right and walk west for about 20 m. Bear right and walk northwest for about 55 m, until you reach Claro M. Recto Hall at its north entrance."
+  },
+  "15": {
+   "distance_m": 27.42
+  },
+  "21": {
+   "status": "closed"
+  },
+  "23": {
+   "distance_m": 59.14
+  },
+  "24": {
+   "distance_m": 50.29
+  },
+  "25": {
+   "distance_m": 66.57,
+   "direction_hint": "Head south for about 20 m. Turn right and walk west for about 45 m, until you reach Claro M. Recto Hall at its south entrance.",
+   "reverse_hint": "Head east for about 45 m. Turn left and walk north for about 20 m, until you reach St. Br. Miguel Hall."
+  },
+  "26": {
+   "distance_m": 72.47
+  },
+  "27": {
+   "distance_m": 43.24
+  },
+  "28": {
+   "direction_hint": "Head north for about 20 m. Turn right and walk east for about 20 m. Turn left and walk north for about 55 m. Turn right and walk southeast for about 35 m, passing BB Hall (St. Br. Benilde) on your left, until you reach Feldgrau Pay Parking at its school entrance. This way goes around the buildings.",
+   "reverse_hint": "Head northwest for about 35 m, passing BB Hall (St. Br. Benilde) on your right. Turn left and walk south for about 55 m. Turn right and walk west for about 20 m. Turn left and walk south for about 20 m, until you reach Br. Vernon Mabile Hall. This way goes around the buildings."
+  },
+  "30": {
+   "direction_hint": "Head west for about 80 m. Turn right and walk north for about 35 m, until you reach BB Hall (St. Br. Benilde) at its main entrance.",
+   "reverse_hint": "Head south for about 35 m. Turn left and walk east for about 80 m, until you reach the Side Gate."
+  },
+  "32": {
+   "distance_m": 53.08
+  },
+  "33": {
+   "distance_m": 101.74,
+   "direction_hint": "Head west for about 45 m, passing St. Mutien Marie Hall on your left. Turn right and walk north for about 20 m. Turn left and walk west for about 40 m, until you reach the Capilla. This way follows the covered walkway south of Senten.",
+   "reverse_hint": "Head east for about 40 m. Turn right and walk south for about 20 m. Turn left and walk east for about 45 m, passing St. Mutien Marie Hall on your right, until you reach the Senten Walkway Junction. This way follows the covered walkway south of Senten."
+  },
+  "35": {
+   "distance_m": 65.5,
+   "direction_hint": "Head east past Diokno Hall. Turn left and walk north for about 35 m along its east side, then turn left to the College LRC.",
+   "reverse_hint": "Head east from the College LRC. Turn right and walk south for about 35 m along Diokno Hall's east side, then turn right to Diokno Hall."
+  },
+  "36": {
+   "distance_m": 81.5,
+   "direction_hint": "Head east for about 20 m. Turn left and walk north for about 60 m, until you reach Gen. M. Malvar.",
+   "reverse_hint": "Head south for about 60 m. Turn right and walk west for about 20 m, until you reach the College LRC."
+  },
+  "38": {
+   "distance_m": 70.51,
+   "direction_hint": "Head west for about 25 m. Turn right and walk north for about 45 m, until you reach the De La Salle Brothers' Novitiate.",
+   "reverse_hint": "Head south for about 45 m. Turn left and walk east for about 25 m, until you reach the College LRC."
+  },
+  "43": {
+   "direction_hint": "Head south for about 30 m. Turn right and walk west for about 50 m, until you reach Mabini Hall at its ramp entrance.",
+   "reverse_hint": "Head east for about 50 m. Turn left and walk north for about 30 m, until you reach El Filibusterismo Hall."
+  },
+  "44": {
+   "direction_hint": "Head south for about 105 m, until you reach the CBEAM Gate. This way follows the road.",
+   "reverse_hint": "Head north for about 105 m, until you reach the Student Center. This way follows the road."
+  }
+ },
+ "renamed": {
+  "8": {
+   "name": "SENTRUM \u2013 Main Entrance",
+   "building": "SENTRUM",
+   "entrance": "Main Entrance"
+  },
+  "9": {
+   "name": "Chez Rafael \u2013 Main Entrances",
+   "building": "Chez Rafael",
+   "entrance": "Main Entrances"
+  },
+  "20": {
+   "name": "Sports Complex \u2013 Door 1",
+   "building": "Sports Complex",
+   "entrance": "Door 1"
+  },
+  "26": {
+   "name": "St. Mutien Marie Hall \u2013 South Entrance",
+   "building": "St. Mutien Marie Hall",
+   "entrance": "South Entrance"
+  },
+  "30": {
+   "name": "Feldgrau Pay Parking \u2013 Exit",
+   "building": "Feldgrau Pay Parking",
+   "entrance": "Exit"
+  },
+  "31": {
+   "name": "Mabini Hall \u2013 Back Entrances",
+   "building": "Mabini Hall",
+   "entrance": "Back Entrances"
+  }
+ },
+ "removed": []
+}

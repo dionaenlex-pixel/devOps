@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}Entrances · AnimoNav admin{% endblock %}
+{% block body_class %}app{% endblock %}
+{% block head %}{% include "_leaflet.html" %}{% endblock %}
+{% block body %}
+<main class="layout">
+  <section class="panel">
+    {% set active = "entrances" %}{% include "_admin_nav.html" %}
+    <header class="brand">
+      <h1>Entrances &amp; pins</h1>
+      <p class="hint">Add, rename or delete a building's entrances, and drag any pin to move it.</p>
+    </header>
+
+    {% for message in get_flashed_messages() %}<p class="notice">{{ message }}</p>{% endfor %}
+    <input type="hidden" id="csrf" value="{{ csrf_token() }}">
+
+    <div class="route-form">
+      <label for="building">Building</label>
+      <select id="building" name="building" form="add-form" required>
+        <option value="">Choose a building…</option>
+      </select>
+
+      {# Filled in by admin_entrances.js once a building is picked #}
+      <div id="manage" class="manage" hidden>
+        <form method="post" action="{{ url_for('admin_rename_building') }}" class="inline-form">
+          <input type="hidden" name="csrf" value="{{ csrf_token() }}">
+          <input type="hidden" name="old_building" id="old-building">
+          <input name="building" id="building-name" aria-label="Building name" required>
+          <button type="submit" class="secondary">Rename building</button>
+        </form>
+        <p class="hint">Entrances (rename, or delete one that no pathway uses):</p>
+        <ul id="entrance-list" class="entrance-list"></ul>
+      </div>
+
+      <label class="check-row"><input type="checkbox" id="show-gates"> Move gate pins (<b class="gate-dot">orange</b>)</label>
+      <label class="check-row"><input type="checkbox" id="show-entrances"> Move every building's entrance pins (<b class="all-dot">blue</b>)</label>
+    </div>
+
+    <form method="post" action="{{ url_for('admin_add_entrance') }}" id="add-form" class="route-form">
+      <input type="hidden" name="csrf" value="{{ csrf_token() }}">
+      <label for="entrance">New entrance name</label>
+      <input id="entrance" name="entrance" placeholder="e.g. Back Entrance" required>
+      <input type="hidden" id="x" name="x">
+      <input type="hidden" id="y" name="y">
+
+      <ol class="howto">
+        <li><b class="from-dot">Green</b> pins are the building's entrances. Drag one to move it; it saves right away.</li>
+        <li>Drag the <b class="to-dot">red</b> pin (or click the map) to where the new entrance is.</li>
+        <li>Press Add entrance. Then on the pathways page, move a pathway to it or add a new one.</li>
+      </ol>
+      <button type="submit" class="primary">Add entrance</button>
+    </form>
+    <p id="msg" class="notice" hidden></p>
+  </section>
+  <div id="map" class="map tracing" aria-label="Campus map for placing entrances"></div>
+</main>
+<script>
+  const ENTRANCE_BUILDINGS = {{ buildings|tojson }};
+  const ENTRANCE_SELECTED = {{ selected|tojson }};
+</script>
+<script src="{{ url_for('static', filename='admin_entrances.js') }}"></script>
+{% endblock %}
